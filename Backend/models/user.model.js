@@ -17,12 +17,12 @@ const userSchema = new mongoose.Schema({
     },
 
     email:{
-        tyoe:String,
+        type:String,
         required:true,
         unique:true,
         minlength:[5,'Email must be atleast 5 characters long'],
     },
-    passwrord:{
+    password:{
         type:String,
         required:true,
         select:false,
@@ -46,7 +46,7 @@ userSchema.statics.hashPassword = async function (passwrord){
     return await bcrypt.hash(passwrord,10); 
 }
 
-const userModel = mongoose.model('user',userSchema);
+const userModel = mongoose.model('User',userSchema);
 
 
 module.exports = userModel;
