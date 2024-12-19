@@ -38,12 +38,12 @@ userSchema.methods.generateAuthToken = function(){
     return token;
 }
 
-userSchema.methods.comparePassword = async function(passwrord){
-    return await bcrypt.compare(passwrord,this.passwrord);
+userSchema.methods.comparePassword = async function(password){
+    return await bcrypt.compare(password,this.password);
 }
 
-userSchema.statics.hashPassword = async function (passwrord){
-    return await bcrypt.hash(passwrord,10); 
+userSchema.statics.hashPassword = async function (password){
+    return await bcrypt.hash(password,10); 
 }
 
 const userModel = mongoose.model('User',userSchema);
