@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Userlogin = () => {
   return (
 
-    <div className='p-7'>
+    <div className='p-7 h-screen flex flex-col justify-between'>
      <div>
      <img className='w-16 mb-10' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
         <form>
@@ -24,14 +25,17 @@ const Userlogin = () => {
         placeholder='password' 
         />
         <button
-        className='bg-[#111] text-white font-semibold mb-7 rounded px-4 py-2  w-full text-lg placeholder:text-base'>
+        className='bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2  w-full text-lg placeholder:text-base'>
             Login</button>
 
+          
+
         </form>
+        <p className='text-center'>New Here <Link to={'/signup'} className='text-blue-600' >Create New Account</Link></p> 
      </div>
      <div>
         <button
-         className='bg-[#111] text-white font-semibold mb-7 rounded px-4 py-2  w-full text-lg placeholder:text-base'>
+         className='bg-[#10b461] text-white font-semibold mb-7 rounded px-4 py-2  w-full text-lg placeholder:text-base'>
             Sign In as Captain</button>
      </div>
     </div>
