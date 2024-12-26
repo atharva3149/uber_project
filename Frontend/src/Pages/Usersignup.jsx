@@ -14,14 +14,14 @@ const Usersignup = () => {
   const submitHandler= (e) =>{
 e.preventDefault()
 setUserData({
-  username:{
+  fullName:{
     firstName:firstName,
   lastname: lastname ,
 },
 password:password,
 email:email
 })
-
+ 
 setEmail('')
 setfirstName('')
 setLastname('')
