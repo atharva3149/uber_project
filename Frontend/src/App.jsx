@@ -7,6 +7,7 @@ import Captainlogin from './Pages/Captainlogin'
 import Captainsignup from './Pages/Captainsignup'
 import Home from './Pages/Home'
 import UserProtectWrapper from './Pages/UserProtectWrapper'
+import UserLogout from './Pages/UserLogout'
 
 
 
@@ -26,7 +27,7 @@ const App = () => {
           <Home/>
         </UserProtectWrapper>
       }/>
-      <Route path='/user/logout' element={<UserProtectWrapper>
+      <Route path='/users/logout' element={<UserProtectWrapper>
        <UserLogout/>
 
       </UserProtectWrapper>}
