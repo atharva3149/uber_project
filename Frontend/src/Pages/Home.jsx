@@ -65,7 +65,7 @@ useGSAP(function(){
         <form onSubmit={(e)=>{
           submitHandler(e)
         }}>
-          <div className="line absolute h-16 w-1 left-10 top-[35%] bg-gray-900 rounded-full"></div>
+          <div className="line absolute h-16 w-1 left-10 top-[45%] bg-gray-900 rounded-full"></div>
           <input 
           onClick={()=>{setpanelopen(true)}}
           value={pickup}
