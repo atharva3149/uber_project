@@ -6,6 +6,7 @@ const RidePopup = (props) => {
           <h5 className='p-1 text-center w-[93%] absolute top-0 ' onClick={()=>{
          props.setridepopuppanel(false)
       }}><i className="text-3xl text-gray-200 ri-arrow-down-wide-fill"></i></h5>
+      
               <h3 className='text-2xl font-semibold mb-5'>New Ride Available</h3>
 
               <div className='flex items-center justify-between p-3 bg-yellow-400 rounded-lg mt-4'>
@@ -43,13 +44,18 @@ const RidePopup = (props) => {
               </div>  
               </div>
              </div>
-             <button onClick={()=>{
-             props.setConfirmridepopuppanel(true)
-             }} className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>Accept</button>
+          <div className='flex w-full  mt-5 items-center justify-between'>
 
-<button onClick={()=>{
-             props.setridepopuppanel(false)
-             }} className='w-full mt-1 bg-gray-300 text-gray-700 font-semibold p-2 rounded-lg'>Ignore</button>
+          <button onClick={()=>{
+             props.setridepopuppane (false)
+             }} className=' mt-1 bg-gray-300 text-gray-700 font-semibold p-3 px-10 rounded-lg'>Ignore</button>
+
+          <button onClick={()=>{
+             props.setConfirmridepopuppanel(true)
+             }} className=' bg-green-600 text-white font-semibold p-3 px-10 rounded-lg'>Accept</button>
+
+
+          </div>
 
              
              </div>

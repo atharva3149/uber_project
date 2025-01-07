@@ -149,7 +149,7 @@ useGSAP(function(){
             setdestination(e.target.value)
           }}
           className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full mt-3'
-           type="text" placeholder='Enter your destination' />
+           type="text" placeholder='Enter your destination' />  
         </form>
         </div>
 
