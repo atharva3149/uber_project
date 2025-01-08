@@ -1,6 +1,9 @@
 import React, { useRef, useState } from 'react'
+import axios from 'axios'
 import  { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useNavigate } from 'react-router-dom';
+
 import 'remixicon/fonts/remixicon.css'
 import LocationSearchPanel from '../components/LocationSearchPanel'
 import VehiclePanel from '../components/VehiclePanel'
@@ -23,6 +26,43 @@ const Home = () => {
   const [confirmridepanel, setconfirmridepanel] = useState(false)
   const [VehicleFound, setVehicleFound] = useState(false)
   const [waitingForDriver, setwaitingForDriver] = useState(false)
+  const [ pickupSuggestions, setPickupSuggestions ] = useState([])
+  const [ destinationSuggestions, setDestinationSuggestions ] = useState([])
+  const [ activeField, setActiveField ] = useState(null)
+
+  const navigate = useNavigate()
+
+  const handlePickupChange = async (e) => {
+    setpickup(e.target.value)
+    try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+            params: { input: e.target.value },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+
+        })
+        setPickupSuggestions(response.data)
+    } catch {
+        // handle error
+    }
+}
+
+const handleDestinationChange = async (e) => {
+    setdestination(e.target.value)
+    try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+            params: { input: e.target.value },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        setDestinationSuggestions(response.data)
+    } catch {
+        // handle error
+    }
+}
+
 
 const submitHandler = (e) =>{
 e.preventDefault()
@@ -129,32 +169,43 @@ useGSAP(function(){
         <i className="ri-arrow-down-wide-line"></i>
         </h5>
           <h4 className='text-2xl font-semibold'>Find a trip</h4>
-        <form onSubmit={(e)=>{
-          submitHandler(e)
-        }}>
-          <div className="line absolute h-16 w-1 left-10 top-[45%] bg-gray-900 rounded-full"></div>
-          <input 
-          onClick={()=>{setpanelopen(true)}}
-          value={pickup}
-          onChange={(e)=>{  
-            setpickup(e.target.value)
-          }}
-          className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full mt-5' 
-          type="text" placeholder='Add a pick up location' />
-
-          <input 
-           onClick={()=>{setpanelopen(true)}}
-          value={destination}
-          onChange={(e)=>{  
-            setdestination(e.target.value)
-          }}
-          className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full mt-3'
-           type="text" placeholder='Enter your destination' />  
-        </form>
+          <form className='relative py-3' onSubmit={(e) => {
+                        submitHandler(e)
+                    }}>
+                        <div className="line absolute h-16 w-1 top-[50%] -translate-y-1/2 left-5 bg-gray-700 rounded-full"></div>
+                        <input
+                            onClick={() => {
+                                setpanelopen(true)
+                                setActiveField('pickup')
+                            }}
+                            value={pickup}
+                            onChange={handlePickupChange}
+                            className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full'
+                            type="text"
+                            placeholder='Add a pick-up location'
+                        />
+                        <input
+                            onClick={() => {
+                                setpanelopen(true)
+                                setActiveField('destination')
+                            }}
+                            value={destination}
+                            onChange={handleDestinationChange}
+                            className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full  mt-3'
+                            type="text"
+                            placeholder='Enter your destination' />
+                    </form>
         </div>
 
         <div ref={panelRef} className='  bg-white  h-0'>
-            <LocationSearchPanel setpanelopen={setpanelopen} setvehiclePanel={setvehiclePanel} />
+        <LocationSearchPanel
+                        suggestions={activeField === 'pickup' ? pickupSuggestions : destinationSuggestions}
+                        setpanelopen={setpanelopen}
+                        setvehiclePanel={setvehiclePanel}
+                        setpickup={setpickup}
+                        setdestination={setdestination}
+                        activeField={activeField}
+                    />
         </div>
 
       </div>
