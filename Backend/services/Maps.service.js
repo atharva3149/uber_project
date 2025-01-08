@@ -64,7 +64,7 @@ module.exports.getDistanceAndTime = async (origin, destination) => {
         }
         const destinationLocation = destinationResponse.data[0];
 
-        // Calculate straight-line distance
+        // Calculate straight-line distance using haversine formula
         const distance = haversineDistance(
             parseFloat(originLocation.lat),
             parseFloat(originLocation.lon),
@@ -74,24 +74,18 @@ module.exports.getDistanceAndTime = async (origin, destination) => {
 
         // Assume an average driving speed (e.g., 60 km/h = 16.67 m/s)
         const averageSpeedMetersPerSecond = 16.67; // Driving speed
-        const durationSeconds = distance / averageSpeedMetersPerSecond;
-
-        // Convert duration to hours, minutes, and seconds
-        const hours = Math.floor(durationSeconds / 3600);
-        const minutes = Math.floor((durationSeconds % 3600) / 60);
-        const seconds = Math.floor(durationSeconds % 60);
-
-        const duration = `${hours}h ${minutes}m ${seconds}s`;
+        const durationSeconds = Math.round(distance / averageSpeedMetersPerSecond); // Duration in seconds
 
         return {
-            distance: `${(distance / 1000).toFixed(2)} km`, // Distance in kilometers
-            duration: duration, // Estimated duration based on speed
+            distance: { value: Math.round(distance) }, // Distance in meters
+            duration: { value: durationSeconds }       // Duration in seconds
         };
     } catch (error) {
         console.error('Error fetching distance and time:', error.message);
         throw error;
     }
 };
+    
 
 
 // Get autocomplete suggestions using LocationIQ API
