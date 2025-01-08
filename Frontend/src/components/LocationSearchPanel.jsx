@@ -9,8 +9,8 @@ const LocationSearchPanel = ({ suggestions, setvehiclePanel, setpanelopen, setpi
           setdestination(suggestion.formatted); // Access the `formatted` property
       }
       // Optionally set other state changes
-      setvehiclePanel(true);
-      setpanelopen(false);
+    //   setvehiclePanel(true);
+    //   setpanelopen(false);
   };
 
   return (

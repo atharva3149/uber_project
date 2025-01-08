@@ -29,6 +29,7 @@ const Home = () => {
   const [ pickupSuggestions, setPickupSuggestions ] = useState([])
   const [ destinationSuggestions, setDestinationSuggestions ] = useState([])
   const [ activeField, setActiveField ] = useState(null)
+  const [fare, setfare] = useState({})
 
   const navigate = useNavigate()
 
@@ -149,6 +150,22 @@ useGSAP(function(){
   }
 },[waitingForDriver])
 
+async function findTrip() {
+  setvehiclePanel(true)
+  setpanelopen(false)
+
+  const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
+      params: { pickup, destination },
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+  })
+
+
+  console.log(response.data)
+
+
+}
 
   return (
     <div className='h-screen relative overflow-hidden'>
@@ -195,6 +212,11 @@ useGSAP(function(){
                             type="text"
                             placeholder='Enter your destination' />
                     </form>
+                    <button 
+                    onClick={findTrip}
+                    className='bg-black text-white px-4 py-2 rounded-lg mt-3 w-full'>
+                      Find Trip
+                    </button>
         </div>
 
         <div ref={panelRef} className='  bg-white  h-0'>
