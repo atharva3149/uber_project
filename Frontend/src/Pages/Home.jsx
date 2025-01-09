@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import  { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
@@ -10,6 +10,8 @@ import VehiclePanel from '../components/VehiclePanel'
 import ConfirmRide from '../components/ConfirmRide'
 import LookingForDriver from '../components/LookingForDriver'
 import WaitingForDriver from '../components/WaitingForDriver'
+import { SocketContext } from '../context/SocketContext';
+import { UserDataContext } from '../context/userContext';
 
 const Home = () => {
   const [pickup, setpickup] = useState('')
@@ -31,6 +33,14 @@ const Home = () => {
   const [ activeField, setActiveField ] = useState(null)
   const [fare, setfare] = useState({})
   const [vehicleType, setvehicleType] = useState(null)
+
+  const { socket } = useContext(SocketContext)
+  const { user } = useContext(UserDataContext)
+
+  useEffect(()=>{
+    socket.emit("join", { userType: "user", userId: user._id })
+    console.log(user)
+  })
 
   const navigate = useNavigate()
 

@@ -28,7 +28,7 @@ axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
     }
 }).then((response)=>{
     if(response.status === 200){
-        setuser(response.data.user)
+        setuser(response.data)
         setIsloading(false)
     }
 })
