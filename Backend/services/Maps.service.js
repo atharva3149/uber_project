@@ -1,4 +1,5 @@
 const axios = require('axios');
+const captainModel = require('../models/captain.model')
 
 const haversineDistance = (lat1, lon1, lat2, lon2) => {
     const toRadians = (degrees) => degrees * (Math.PI / 180);
@@ -87,7 +88,6 @@ module.exports.getDistanceAndTime = async (origin, destination) => {
 };
     
 
-
 // Get autocomplete suggestions using LocationIQ API
 module.exports.getAutoCompleteSuggestions = async (input) => {
     if (!input) {
@@ -122,4 +122,16 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
 };
 // Haversine distance calculation function
 
+module.exports.getCaptainsInTheRadius = async (lat , lng , radius)=>{
+
+    const captains = await captainModel.find({
+        location:{
+            $geoWithin:{
+                $centerSphere:[[lng,lat], radius/3963.2] // Earth's radius 
+            }
+        }
+    });
+    return captains;
+
+}
 
